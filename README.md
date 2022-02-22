@@ -1,2 +1,2 @@
 # Online-Coding
-This repository is the pool of all the renown online coding platforms, coding challenges and programs.
+This repo is providing solutions to all the leetcode problems.
