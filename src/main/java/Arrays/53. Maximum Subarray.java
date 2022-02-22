@@ -1,39 +1,42 @@
 /*
-You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
 
-Return true if you can reach the last index, or false otherwise.
+A subarray is a contiguous part of an array.
 
  
 
 Example 1:
 
-Input: nums = [2,3,1,1,4]
-Output: true
-Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: [4,-1,2,1] has the largest sum = 6.
 Example 2:
 
-Input: nums = [3,2,1,0,4]
-Output: false
-Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
+Input: nums = [1]
+Output: 1
+Example 3:
+
+Input: nums = [5,4,-1,7,8]
+Output: 23
 
 */
 
 class Solution {
-    public boolean canJump(int[] nums) {
-        if(nums.length == 1  && (nums[0] == 0  || nums[0]== 1)) return true;
-      
-        int reachable = 0 ;
-		for (int i = 0; i < nums.length; i++) {
-		
-            if (reachable < i) return false;
+    public int maxSubArray(int[] nums) {
+        int maxSum = Integer.MIN_VALUE;
+        int maxCurrent = 0;
         
-            if (nums[i] == 0) continue;
-            reachable = Math.max(reachable, i+nums[i]);
-		}
-
-		return true;
+        for (int i = 0 ; i < nums.length ; i++) {
+            maxCurrent = maxCurrent + nums[i];
+            if (maxSum < maxCurrent) {
+                maxSum = maxCurrent;
+            }
             
-        
+            if (maxCurrent < 0) {
+                maxCurrent = 0;
+            }
+        }
+        return maxSum;
     }
 }
 
