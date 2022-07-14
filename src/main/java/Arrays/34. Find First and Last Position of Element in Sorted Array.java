@@ -21,6 +21,71 @@ Input: nums = [], target = 0
 Output: [-1,-1]
 */
 
+//Approach-1 With loop
+
+class Solution {
+	public int[] searchRange(int[] nums, int target) {
+
+		int[] result = new int[2];
+		Arrays.fill(result, -1);
+		if (nums.length == 0) {
+			return result;
+		}
+        
+        if (nums.length == 1 && nums[0] == target) {
+            Arrays.fill(result, 0);
+            return result;
+        }
+        
+		int start = 0;
+		int end = nums.length - 1;
+
+		while (start <= end) {
+
+			int mid = start + (end - start) / 2;
+
+			if (target == nums[mid]) {
+				int firstIndex = mid;
+				int lastIndex = mid;
+
+				int curr = mid;
+				
+				while (++curr < nums.length) {
+					if (nums[curr] == target) {
+						lastIndex++;
+					} else {
+						break;
+					}
+				}
+
+				curr = mid;
+				while (--curr >= 0) {
+					if (nums[curr] == target) {
+						firstIndex--;
+					} else {
+						break;
+					}
+				}
+				
+				result[0] = firstIndex;
+				result[1] = lastIndex;
+
+				break;
+
+			} else if (target < nums[mid]) {
+				end = mid - 1;
+			} else {
+				start = mid + 1;
+			}
+		}
+
+		return result;
+
+	}
+}
+
+
+//Approach-2 with Recursion
 class Solution {
     public int[] searchRange(int[] nums, int target) {
         
