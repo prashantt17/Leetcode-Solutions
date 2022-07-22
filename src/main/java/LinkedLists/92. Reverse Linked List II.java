@@ -14,53 +14,66 @@ Output: [5]
 
 */
 
-class Solution {public ListNode reverseBetween(ListNode head, int left, int right) {
-  if (left == right)
-    return head;
-  ListNode l = null, r = null, curr = head;
-  int c = 0;
-  while (curr != null) {
-    c++;
-    if (c == left)
-      break;
-    l = curr;
-    curr = curr.next;
-  }
-  ListNode lt = curr;
-  while (curr != null) {
+class Solution {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
 
-    if (c == right)
-      break;
-    c++;
-    curr = curr.next;
-  }
+		ListNode curr = head;
+		ListNode leftList = null;
+		ListNode rightList = null;
 
-  r = curr.next;
-  curr.next = null;
-  lt = reverseLinkedList(lt);
-  if (l == null)
-    head = lt;
-  else
-    l.next = lt;
-  while (lt.next != null) {
-    lt = lt.next;
-  }
-  lt.next = r;
+		int counter = 0;
 
-  return head;
-}
+		while (curr != null) {
+			counter++;
+			if (counter == left) {
+				break;
+			}
+			leftList = curr;
+			curr = curr.next;
+		}
 
-public ListNode reverseLinkedList(ListNode head) {
-  ListNode curr = head;
-  ListNode prev = null;
-  ListNode next = null;
-  while (curr != null) {
+		ListNode leftListTemp = curr;
+		while (curr != null) {
+			if (counter == right) {
+				break;
+			}
+			counter++;
+			curr = curr.next;
 
-    next = curr.next;
-    curr.next = prev;
-    prev = curr;
-    curr = next;
-  }
-  return prev;
-}
+		}
+
+		rightList = curr.next;
+		curr.next = null;
+
+		leftListTemp = reverseLinkedList(leftListTemp);
+
+		if (leftList == null) {
+			head = leftListTemp;
+		} else {
+			leftList.next = leftListTemp;
+		}
+
+		while (leftListTemp.next != null) {
+			leftListTemp = leftListTemp.next;
+		}
+		leftListTemp.next = rightList;
+
+		return head;
+
+	
+    }
+
+    public ListNode reverseLinkedList(ListNode head) {
+        ListNode curr = head;
+        ListNode prev = null;
+        ListNode next = null;
+        while (curr != null) {
+
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
 }
