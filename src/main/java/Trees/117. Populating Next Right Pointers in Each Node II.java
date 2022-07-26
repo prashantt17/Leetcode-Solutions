@@ -12,11 +12,12 @@ Populate each next pointer to point to its next right node. If there is no next 
 Initially, all next pointers are set to NULL.
 */
 
-In this approach first, we will create the dummy node and use the node's next pointer to traverse the tree horizontally.
+//In this approach first, we will create the dummy node and use the node's next pointer to traverse the tree horizontally.
 
-for each level, we will assign the dummy node to the left-most node and try to use the next pointer to move ahead and keep checking the node availability
+//for each level, we will assign the dummy node to the left-most node and try to use the next pointer to move ahead and keep checking the node availability
 
-Here's the code for the above depicted solution:
+
+//#############Here's the code for the above depicted solution:################//
 
   
 public Node connect(Node root) {
