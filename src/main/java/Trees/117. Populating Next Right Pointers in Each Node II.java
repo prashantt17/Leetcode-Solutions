@@ -16,7 +16,6 @@ Initially, all next pointers are set to NULL.
 
 //for each level, we will assign the dummy node to the left-most node and try to use the next pointer to move ahead and keep checking the node availability
 
-
 //#############Here's the code for the above depicted solution:################//
 
   
