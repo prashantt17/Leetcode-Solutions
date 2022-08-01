@@ -28,19 +28,25 @@ Output: 1
 
 class Solution {
     public int lastStoneWeight(int[] stones) {
-        PriorityQueue pq = new PriorityQueue < > (Collections.reverseOrder());
-        for (int i = 0; i < stones.length; i++)
-            pq.add(stones[i]);
-        while (pq.size() > 0) {
-            if (pq.size() == 1)
-                return pq.peek();
-            int a = pq.peek();
-            pq.poll();
-            int b = pq.peek();
-            pq.poll();
-            if (a != b)
-                pq.add(Math.abs(a - b));
+        PriorityQueue<Integer> stonesQ=new PriorityQueue<>(Collections.reverseOrder());
+        int x=0;
+        int y=0;
+        for(int val:stones)
+        {
+            stonesQ.add(val);
         }
-        return 0;
+        while(stonesQ.size()>1)
+        {
+            x=stonesQ.poll();
+            y=stonesQ.poll();
+            if(x!=y)
+            {
+                stonesQ.add(x-y);
+            }
+             if (stonesQ.isEmpty()) {
+                return 0;
+            }
+        }
+        return stonesQ.poll(); 
     }
 }
