@@ -2,13 +2,13 @@ class Solution {
     public int leastInterval(char[] tasks, int n) {
         int coolDown[]=new int[26];
         int freq[]=new int[26];
-        for(int i=0;i<task.length;i++) {
-            freq[task[i]-'A']++;
+        for(int i=0;i<tasks.length;i++) {
+            freq[tasks[i]-'A']++;
         }
         int i=0;
         int t=0;
         int prev=0;
-        while(i<task.length) {
+        while(i<tasks.length) {
             int min=Integer.MAX_VALUE;
             int idx=-1;
             for(int j=0;j<26;j++) {
