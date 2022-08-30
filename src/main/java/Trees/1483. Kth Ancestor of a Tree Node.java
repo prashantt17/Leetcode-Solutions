@@ -1,69 +1,49 @@
-public class MainTreeAnscestor {
-   	int n;
-   	int[] parent;
-   	int[] level;
-   	int[] higherParent;
-   	int distance;
+class TreeAncestor {
+    int n;
+    int[] parent;
+    List<Integer>[] nodeInPath;
+    int[] nodeIdxInPath;
 
-   	public MainTreeAnscestor(int n, int[] parent) {
-   		this.n = n;
-   		this.parent = parent;
-   		this.level = new int[n];
-   		this.higherParent = new int[n];
-   		this.distance = (int) (Math.log(n) / Math.log(2));
+    public TreeAncestor(int n, int[] parent) {
+        this.n = n;
+        this.parent = parent;
+        nodeInPath = new ArrayList[n];
+        nodeIdxInPath = new int[n];
+        fill();
+    }
 
-   		Map<Integer, ArrayList<Integer>> tree = new HashMap<Integer, ArrayList<Integer>>();
+    private void fill() {
+        boolean[] inner = new boolean[n];
+        for (int i = 1; i < n; i++) {
+            inner[parent[i]] = true;
+        }
 
-   		for (int i = 1; i < n; i++) {
-   			if (!tree.containsKey(parent[i])) {
-   				tree.put(parent[i], new ArrayList<Integer>());
-   			}
-   			tree.get(parent[i]).add(i);
-   		}
+        for (int i = 1; i < n; i++) {
+            if (inner[i] || nodeInPath[i] != null) {
+                continue;
+            }
+            List<Integer> path = new ArrayList<>();
+            int k = i;
+            while (k != -1) {
+                path.add(k);
+                k = parent[k];
+            }
+            int m = path.size();
+            for (int j = 0; j < m; j++) {
+                int node = path.get(j);
+                if (nodeInPath[node] != null) break;
+                nodeInPath[node] = path;
+                nodeIdxInPath[node] = j;
+            }
+        }
+    }
 
-   		List<Integer> queue = new LinkedList<Integer>();
-   		queue.add(0);
-   		level[0] = 0;
-   		higherParent[0] = 0;
-   		while (!queue.isEmpty()) {
-   			int current = queue.remove(0);
-   			if (tree.containsKey(current)) {
-   				for (int child : tree.get(current)) {
-   					level[child] = level[current] + 1;
-   					if (level[child] >= level[higherParent[current]] + distance) {
-   						higherParent[child] = current;
-   					} else {
-   						higherParent[child] = higherParent[current];
-   					}
-   					queue.add(child);
-   				}
-   			}
-   		}
-   	}
-
-   	public int getKthAncestor(int node, int k) {
-   		if (k == 0) {
-   			return node;
-   		}
-   		if (k == 1) {
-   			return parent[node];
-   		}
-   		if (level[node] < k) {
-   			return -1;
-   		}
-
-   		int current = node;
-   		while (level[node] - level[current] < k - distance) {
-   			current = higherParent[current];
-   		}
-
-   		while (level[node] - level[current] < k) {
-   			current = parent[current];
-   		}
-
-   		return current;
-   	}
-   }
+    public int getKthAncestor(int node, int k) {
+        List<Integer> path = nodeInPath[node];
+        int idx = nodeIdxInPath[node] + k;
+        return idx >= path.size() ? -1 : path.get(idx);
+    }
+}
 
 /**
  * Your TreeAncestor object will be instantiated and called as such:
