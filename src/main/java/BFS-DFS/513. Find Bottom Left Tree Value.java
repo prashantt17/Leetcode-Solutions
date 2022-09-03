@@ -13,22 +13,18 @@
  *     }
  * }
  */
+
 class Solution {
+    int ans =0; 
+    int h =0;
     public int findBottomLeftValue(TreeNode root) {
-        int max = Integer.MIN_VALUE;
-    int res = -1;
-    public int findBottomLeftValue(TreeNode root) {
-        check(root,0);
-        return res;
+        findBottomLeft(root, 1);
+        return ans;
     }
-    void check(TreeNode root, int h){
-        if(root==null)
-            return;
-        if(h>max){
-            max=h;
-            res = root.val;
-        }
-        check(root.left,h+1);
-        check(root.right,h+1);
+    
+    public void findBottomLeft(TreeNode root,int depth){
+        if(h<depth){ans = root.val; h=depth;}
+        if(root.left != null){findBottomLeft(root.left , depth+1);}
+        if(root.right != null){findBottomLeft(root.right , depth+1);}
     }
 }
